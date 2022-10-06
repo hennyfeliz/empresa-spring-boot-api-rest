@@ -33,8 +33,8 @@ public class EmpleadoController {
         return HttpStatus.ACCEPTED;
     }
 
-    @PutMapping("/")
-    public Empleado updateEmpleado(@PathVariable(value = "id_empleado") Long id,
+    @PutMapping("/{id}")
+    public HttpStatus updateEmpleado(@PathVariable(value = "id_empleado") Long id,
                                 @Valid @RequestBody Empleado empleadoDetails){
 
         Empleado empleado = empleadoRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Empleado", "id_empleado", id));
@@ -44,8 +44,17 @@ public class EmpleadoController {
         empleado.setNombreEmpleado(empleadoDetails.getNombreEmpleado());
         empleado.setDireccionEmpleado(empleadoDetails.getDireccionEmpleado());
         empleado.setEmpresa(empleadoDetails.getEmpresa());
+        empleado.setTelefonoEmpleado(empleadoDetails.getTelefonoEmpleado());
+        empleadoRepository.save(empleado);
+        return HttpStatus.OK;
+    }
 
-        return empleadoRepository.save(empleado);
+    @DeleteMapping("/{id}")
+    public HttpStatus deleteEmpleado(@PathVariable(value = "id_empleado") Long id){
+        Empleado empleado = empleadoRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Empleado", "id_empleado", id));
+
+        empleadoRepository.delete(empleado);
+        return HttpStatus.ACCEPTED;
     }
 
 }
