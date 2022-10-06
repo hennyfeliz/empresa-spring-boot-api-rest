@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@RequiredArgsConstructor
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name="empleados")
@@ -27,6 +27,7 @@ public class Empleado {
     @Column(name = "direccion_empleado")
     private String direccionEmpleado;
 
-    @JoinColumn(name = "id_empresa")
-    private Empresa empresa;
+    //@JoinColumn(name = "id_empresa")
+    @Column(name = "id_empresa")
+    private Long empresa;
 }
