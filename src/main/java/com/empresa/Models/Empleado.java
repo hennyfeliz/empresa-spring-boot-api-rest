@@ -7,9 +7,6 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Getter
-@Setter
-@ToString
 @RequiredArgsConstructor
 @AllArgsConstructor
 @NoArgsConstructor
@@ -32,18 +29,4 @@ public class Empleado {
 
     @JoinColumn(name = "id_empresa")
     private Empresa empresa;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Empleado empleado = (Empleado) o;
-        return id != null && Objects.equals(id, empleado.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
-    }
-
 }
