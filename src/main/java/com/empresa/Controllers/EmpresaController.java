@@ -1,12 +1,11 @@
 package com.empresa.Controllers;
 
 import com.empresa.Exceptions.ResourceNotFoundException;
-import com.empresa.Models.Empleado;
 import com.empresa.Models.Empresa;
 import com.empresa.Repository.EmpresaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -25,14 +24,20 @@ public class EmpresaController {
     }
 
     @GetMapping("/{id}")
-    public Empresa getOneEmpresa(@PathVariable(value = "id_empresa") Long id){
+    public Empresa getOneEmpresa(@PathVariable(value = "id") Long id){
         return empresaRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Empresa", "id_empresa",id));
     }
 
-    @PostMapping("/")
+    @PostMapping("/createEmpresa") //not using default, im using the above...
     public HttpStatus createEmpresa(@Valid @RequestBody Empresa empresa){
         empresaRepository.save(empresa);
         return HttpStatus.ACCEPTED;
+    }
+
+    @PostMapping("/")
+    public ResponseEntity<Empresa> create(@RequestBody Empresa newEmpresa) {
+        Empresa empresa = empresaRepository.save(newEmpresa);
+        return new ResponseEntity<>(empresa, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")

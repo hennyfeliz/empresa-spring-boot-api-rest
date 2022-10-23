@@ -1,10 +1,8 @@
 package com.empresa.Models;
 
 import lombok.*;
-import org.hibernate.Hibernate;
 
 import javax.persistence.*;
-import java.util.Objects;
 
 @Entity
 @Data
